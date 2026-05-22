@@ -36,6 +36,28 @@
 
 ---
 
+## 🖼️ Screenshots
+
+<div align="center">
+  <table>
+    <tr>
+      <td align="center">
+        <img src="screenshots/home-page.png" alt="Home Page" width="500">
+        <br />
+        <em>🏠 Home Page - Browse Movies & TV Shows</em>
+      </td>
+      <td align="center">
+        <img src="screenshots/movie-detail.png" alt="Movie Detail" width="500">
+        <br />
+        <em>🎬 Movie Detail - Watch & add to watchlist</em>
+      </td>
+    </tr>
+  </table>
+</div>
+
+---
+
+
 ## 🚀 Quick Start
 
 ### Prerequisites
@@ -114,6 +136,9 @@ grizzle/
 ├── sw.js								# Service Worker
 ├── favicon.png					# Browser favicon
 ├── icon.png						# App icon
+├── screenshots/
+│   └── home-page.png
+     └── movie-detail.png
 ├── css/
 │   └── style.css            		# Styles (dark/light mode)
 ├── js/
