@@ -1,0 +1,19 @@
+# Grizzle - Nginx Configuration Example
+# Copy this file to: D:\streaming\nginx\conf\nginx.conf
+# Or adjust path according to your setup
+
+server {
+    listen       4555;
+    server_name  localhost;
+    
+    root D:/streaming/grizzle;
+    index index.html;
+    
+    location / {
+        try_files $uri $uri/ /index.html;
+    }
+    
+    location ~* \.(css|js|jpg|jpeg|png|gif|ico|svg)$ {
+        expires 30d;
+    }
+}

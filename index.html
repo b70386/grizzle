@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Grizzle - Streaming Platform</title>
+    <meta name="description" content="Stream movies and TV shows for free">
+    <meta name="theme-color" content="#1a1a2e">
+    
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="manifest.json">
+    
+    <!-- Apple Touch Icon -->
+    <link rel="apple-touch-icon" href="icon.png">
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="favicon.png">
+    <link rel="shortcut icon" href="favicon.png">
+</head>
+<body data-theme="dark">
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <img src="icon.png" alt="Grizzle Logo" class="logo-icon-img">
+            </div>
+            
+            <div class="nav-links">
+                <a href="#" class="active" id="navHome">Home</a>
+                <a href="#" id="navMovies">Movies</a>
+                <a href="#" id="navTv">TV Shows</a>
+                <a href="#" id="navWatchlist">⭐ Watchlist</a>
+            </div>
+            
+            <!-- SEARCH BAR DENGAN AUTOCOMPLETE -->
+            <div class="nav-search">
+                <input type="text" id="searchInput" 
+                       placeholder="🔍 Search movies or TV shows..." 
+                       class="search-input" 
+                       autocomplete="off">
+                <button id="searchBtn" class="search-btn">Search</button>
+                <button id="clearAllHistory" class="clear-history-btn" title="Clear search history">🗑️</button>
+                
+                <div id="autocompleteList" class="autocomplete-items" style="display: none;"></div>
+            </div>
+            
+            <div class="nav-actions">
+                <button id="themeToggle" class="theme-toggle" title="Dark/Light mode">🌙</button>
+                <div class="nav-profile">
+                    <span>👤</span>
+                    <span>Profile</span>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <!-- HERO SECTION -->
+        <section class="hero">
+            <div class="hero-content">
+                <h1 class="hero-title">Grizzle</h1>
+                <p class="hero-subtitle">Premium Streaming Experience</p>
+                <p class="hero-description">Watch unlimited movies and TV shows. No ads. Pure entertainment.</p>
+                <div class="hero-buttons">
+                    <button class="btn-primary" id="trendingBtn">🔥 Trending Now</button>
+                    <button class="btn-secondary" id="randomBtn">🎲 I'm Feeling Lucky</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- SEARCH RESULTS SECTION -->
+        <section class="section" id="searchSection" style="display: none;">
+            <div class="section-header">
+                <h2 id="searchTitle">🔍 Search Results</h2>
+                <a href="#" class="view-all" id="closeSearch">✕ Close</a>
+            </div>
+            <div class="movie-grid" id="searchGrid"></div>
+        </section>
+
+        <!-- MOVIE DETAIL PAGE (awalnya hidden) -->
+        <section class="section" id="detailSection" style="display: none;">
+            <div class="detail-container" id="detailContainer">
+                <!-- Dynamic content from JavaScript -->
+            </div>
+        </section>
+
+        <!-- POPULAR MOVIES SECTION -->
+        <section class="section" id="movieSection">
+            <div class="section-header">
+                <h2>🎬 Popular Movies</h2>
+                <a href="#" class="view-all" id="viewAllMovies">View All →</a>
+            </div>
+            <div class="movie-grid" id="movieGrid">
+                <div class="loading">Loading movies...</div>
+            </div>
+        </section>
+
+        <!-- POPULAR TV SHOWS SECTION -->
+        <section class="section" id="tvSection">
+            <div class="section-header">
+                <h2>📺 Popular TV Shows</h2>
+                <a href="#" class="view-all" id="viewAllTv">View All →</a>
+            </div>
+            <div class="movie-grid" id="tvGrid">
+                <div class="loading">Loading TV shows...</div>
+            </div>
+        </section>
+
+<!-- WATCHLIST SECTION (awalnya hidden) -->
+<section class="section" id="watchlistSection" style="display: none;">
+    <div class="section-header">
+        <h2>⭐ My Watchlist</h2>
+        <div class="watchlist-actions">
+            <button id="scrapCodesBtn" class="scrap-btn">🔍 Scrap TMDB Codes</button>
+            <a href="#" class="view-all" id="closeWatchlist">✕ Close</a>
+        </div>
+    </div>
+    <div class="movie-grid" id="watchlistGrid">
+        <div class="loading">Loading watchlist...</div>
+    </div>
+    
+    <!-- TABEL SCRAP TMDB CODES -->
+    <div id="scrapTableContainer" class="scrap-table-container" style="display: none;">
+        <div class="scrap-table-header">
+            <h3>📊 TMDB Codes Analysis</h3>
+            <div class="scrap-table-actions">
+                <button id="exportCSVBtn" class="export-btn">📄 Export CSV</button>
+                <button id="exportJSONBtn" class="export-btn">📋 Export JSON</button>
+                <button id="closeScrapTable" class="close-scrap-btn">✕ Close Table</button>
+            </div>
+        </div>
+        <div class="table-wrapper">
+            <table id="scrapTable" class="scrap-table">
+                <thead>
+                    <tr>
+                        <th>NO</th>
+                        <th>Movie Title</th>
+                        <th>Codes (TMDB)</th>
+                        <th>Relay</th>
+                        <th>Valid ID</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody id="scrapTableBody">
+                    <tr><td colspan="6" class="loading">Loading codes...</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+    </main>
+
+    <!-- MODAL PLAYER -->
+    <div class="modal" id="playerModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modalTitle">Now Playing</h3>
+                <div class="modal-actions">
+                    <button class="modal-refresh" id="refreshPlayer" title="Refresh page (allow iframe content)">🔄</button>
+                    <span class="modal-close" id="closeModal">&times;</span>
+                </div>
+            </div>
+            <div class="modal-body">
+                <iframe id="videoFrame" width="100%" height="400" frameborder="0" allowfullscreen></iframe>
+            </div>
+            <div class="modal-footer">
+                <p id="modalInfo"></p>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <p>Grizzle — Your premium streaming destination</p>
+        <p><small>Content aggregated from publicly available sources. For DMCA requests, contact original providers.</small></p>
+    </footer>
+
+    <!-- Register Service Worker untuk PWA -->
+    <script>
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('sw.js')
+                .then(reg => console.log('Service Worker registered:', reg))
+                .catch(err => console.log('Service Worker failed:', err));
+        }
+    </script>
+    
+    <script src="js/app.js"></script>
+</body>
+</html>

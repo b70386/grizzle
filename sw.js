@@ -1,0 +1,57 @@
+const CACHE_NAME = 'grizzle-v1';
+const urlsToCache = [
+    '/',
+    '/index.html',
+    '/css/style.css',
+    '/js/app.js',
+    '/icon.png',
+    '/favicon.png'
+];
+
+// Install Service Worker
+self.addEventListener('install', event => {
+    event.waitUntil(
+        caches.open(CACHE_NAME)
+            .then(cache => cache.addAll(urlsToCache))
+            .then(() => self.skipWaiting())
+    );
+});
+
+// Fetch dengan cache-first strategy
+self.addEventListener('fetch', event => {
+    event.respondWith(
+        caches.match(event.request)
+            .then(response => {
+                if (response) {
+                    return response;
+                }
+                return fetch(event.request).then(response => {
+                    // Hanya cache response yang valid
+                    if (!response || response.status !== 200 || response.type !== 'basic') {
+                        return response;
+                    }
+                    const responseToCache = response.clone();
+                    caches.open(CACHE_NAME)
+                        .then(cache => {
+                            cache.put(event.request, responseToCache);
+                        });
+                    return response;
+                });
+            })
+    );
+});
+
+// Activate dan hapus cache lama
+self.addEventListener('activate', event => {
+    event.waitUntil(
+        caches.keys().then(cacheNames => {
+            return Promise.all(
+                cacheNames.map(cacheName => {
+                    if (cacheName !== CACHE_NAME) {
+                        return caches.delete(cacheName);
+                    }
+                })
+            );
+        }).then(() => self.clients.claim())
+    );
+});
