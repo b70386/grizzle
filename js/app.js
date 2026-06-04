@@ -1,8 +1,8 @@
 // ============================================
 // KONFIGURASI TMDB API
 // ============================================
-const TMDB_API_KEY = 'MASUKKAN API KEY ANDA DISINI';
-const TMDB_BASE_URL = 'https://api.themoviedb.org/3';
+
+const TMDB_BASE_URL = '/api/tmdb?endpoint=';
 const IMAGE_BASE_URL = 'https://image.tmdb.org/t/p/w500';
 const BACKDROP_BASE_URL = 'https://image.tmdb.org/t/p/original';
 
@@ -219,7 +219,7 @@ function getFallbackTv() {
 // ============================================
 async function fetchFromTMDB(endpoint) {
     try {
-        const url = `${TMDB_BASE_URL}${endpoint}?api_key=${TMDB_API_KEY}&language=en-US`;
+        const url = `${TMDB_BASE_URL}${endpoint}`;
         const response = await fetch(url);
         if (!response.ok) throw new Error(`HTTP ${response.status}`);
         return await response.json();
@@ -746,7 +746,7 @@ function closeWatchlist() {
 async function searchTMDB(query, type = 'multi') {
     if (!query || query.trim() === '') return [];
     try {
-        const url = `${TMDB_BASE_URL}/search/${type}?api_key=${TMDB_API_KEY}&language=en-US&query=${encodeURIComponent(query)}&page=1`;
+        const url = `${TMDB_BASE_URL}/search/${type}&query=${encodeURIComponent(query)}&page=1`;
         const response = await fetch(url);
         if (!response.ok) throw new Error('Search failed');
         const data = await response.json();
@@ -1054,7 +1054,7 @@ let scrapData = [];
 
 async function validateTMDBId(tmdbId, type = 'movie') {
     try {
-        const url = `${TMDB_BASE_URL}/${type}/${tmdbId}?api_key=${TMDB_API_KEY}&language=en-US`;
+        const url = `${TMDB_BASE_URL}/${type}/${tmdbId}`;
         const response = await fetch(url);
         if (response.ok) {
             const data = await response.json();
