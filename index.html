@@ -3,9 +3,35 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="color-scheme" content="dark">
+    
+    <!-- Basic Meta Tags -->
     <title>Grizzle - Streaming Platform</title>
-    <meta name="description" content="Stream movies and TV shows for free">
+    <meta name="description" content="Stream unlimited movies and TV shows for free. Premium streaming experience with no ads. Watch the latest releases anytime, anywhere.">
+    <meta name="keywords" content="streaming, movies, TV shows, free movies, watch online">
     <meta name="theme-color" content="#1a1a2e">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Grizzle">
+    
+    <!-- Open Graph / Social Sharing -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://yoursite.com/">
+    <meta property="og:title" content="Grizzle - Premium Streaming Platform">
+    <meta property="og:description" content="Stream unlimited movies and TV shows for free. Premium streaming experience with no ads.">
+    <meta property="og:image" content="icon.png">
+    <meta property="og:image:alt" content="Grizzle Logo">
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Grizzle - Premium Streaming Platform">
+    <meta name="twitter:description" content="Stream unlimited movies and TV shows for free.">
+    <meta name="twitter:image" content="icon.png">
+    
+    <!-- Security & CSP -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' https://fonts.googleapis.com 'unsafe-inline'; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; frame-src 'self' https:; connect-src 'self' https:;">
+    <meta http-equiv="Permissions-Policy" content="geolocation=(), microphone=(), camera=()">
     
     <!-- PWA Manifest -->
     <link rel="manifest" href="manifest.json">
@@ -20,151 +46,175 @@
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="favicon.png">
     <link rel="shortcut icon" href="favicon.png">
+    
+    <!-- Preconnect to external resources -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 </head>
 <body data-theme="dark">
-    <nav class="navbar">
-        <div class="nav-container">
-            <div class="logo">
-                <img src="icon.png" alt="Grizzle Logo" class="logo-icon-img">
-            </div>
-            
-            <div class="nav-links">
-                <a href="#" class="active" id="navHome">Home</a>
-                <a href="#" id="navMovies">Movies</a>
-                <a href="#" id="navTv">TV Shows</a>
-                <a href="#" id="navWatchlist">⭐ Watchlist</a>
-            </div>
-            
-            <!-- SEARCH BAR DENGAN AUTOCOMPLETE -->
-            <div class="nav-search">
-                <input type="text" id="searchInput" 
-                       placeholder="🔍 Search movies or TV shows..." 
-                       class="search-input" 
-                       autocomplete="off">
-                <button id="searchBtn" class="search-btn">Search</button>
-                <button id="clearAllHistory" class="clear-history-btn" title="Clear search history">🗑️</button>
+    <a href="#main-content" class="skip-to-main-link">Skip to main content</a>
+    
+    <header role="banner">
+        <nav class="navbar" role="navigation" aria-label="Main navigation">
+            <div class="nav-container">
+                <div class="logo">
+                    <img src="icon.png" alt="Grizzle Logo" class="logo-icon-img" width="40" height="40">
+                </div>
                 
-                <div id="autocompleteList" class="autocomplete-items" style="display: none;"></div>
-            </div>
-            
-            <div class="nav-actions">
-                <button id="themeToggle" class="theme-toggle" title="Dark/Light mode">🌙</button>
-                <div class="nav-profile">
-                    <span>👤</span>
-                    <span>Profile</span>
+                <ul class="nav-links" role="menubar">
+                    <li><a href="#home" class="active" id="navHome" aria-current="page" role="menuitem">Home</a></li>
+                    <li><a href="#movies" id="navMovies" role="menuitem">Movies</a></li>
+                    <li><a href="#tv" id="navTv" role="menuitem">TV Shows</a></li>
+                    <li><a href="#watchlist" id="navWatchlist" role="menuitem">⭐ Watchlist</a></li>
+                </ul>
+                
+                <!-- Search Bar with Autocomplete -->
+                <form class="nav-search" role="search" onsubmit="return false;">
+                    <label for="searchInput" class="visually-hidden">Search movies or TV shows</label>
+                    <input 
+                        type="search" 
+                        id="searchInput" 
+                        placeholder="🔍 Search movies or TV shows..." 
+                        class="search-input"
+                        autocomplete="off"
+                        aria-label="Search movies or TV shows"
+                        aria-autocomplete="list"
+                        aria-controls="autocompleteList"
+                        aria-expanded="false">
+                    <button type="button" id="searchBtn" class="search-btn" aria-label="Perform search">Search</button>
+                    <button type="button" id="clearAllHistory" class="clear-history-btn" title="Clear search history" aria-label="Clear search history">🗑️</button>
+                    
+                    <ul id="autocompleteList" class="autocomplete-items" role="listbox" style="display: none;" aria-label="Search suggestions"></ul>
+                </form>
+                
+                <div class="nav-actions">
+                    <button type="button" id="themeToggle" class="theme-toggle" title="Toggle dark/light mode" aria-label="Toggle dark/light mode" aria-pressed="true">🌙</button>
+                    <button type="button" class="nav-profile" aria-label="User profile menu">
+                        <span aria-hidden="true">👤</span>
+                        <span>Profile</span>
+                    </button>
                 </div>
             </div>
-        </div>
-    </nav>
+        </nav>
+    </header>
 
-    <main>
+    <main id="main-content">
         <!-- HERO SECTION -->
-        <section class="hero">
+        <section class="hero" aria-label="Featured content">
             <div class="hero-content">
                 <h1 class="hero-title">Grizzle</h1>
                 <p class="hero-subtitle">Premium Streaming Experience</p>
                 <p class="hero-description">Watch unlimited movies and TV shows. No ads. Pure entertainment.</p>
                 <div class="hero-buttons">
-                    <button class="btn-primary" id="trendingBtn">🔥 Trending Now</button>
-                    <button class="btn-secondary" id="randomBtn">🎲 I'm Feeling Lucky</button>
+                    <button type="button" class="btn-primary" id="trendingBtn" aria-label="View trending movies and shows">🔥 Trending Now</button>
+                    <button type="button" class="btn-secondary" id="randomBtn" aria-label="Get a random movie or show recommendation">🎲 I'm Feeling Lucky</button>
                 </div>
             </div>
         </section>
 
         <!-- SEARCH RESULTS SECTION -->
-        <section class="section" id="searchSection" style="display: none;">
+        <section class="section" id="searchSection" style="display: none;" aria-label="Search results">
             <div class="section-header">
                 <h2 id="searchTitle">🔍 Search Results</h2>
-                <a href="#" class="view-all" id="closeSearch">✕ Close</a>
+                <button type="button" class="view-all" id="closeSearch" aria-label="Close search results">✕ Close</button>
             </div>
-            <div class="movie-grid" id="searchGrid"></div>
+            <div class="movie-grid" id="searchGrid" role="region" aria-label="Search results grid"></div>
         </section>
 
-        <!-- MOVIE DETAIL PAGE (awalnya hidden) -->
-        <section class="section" id="detailSection" style="display: none;">
-            <div class="detail-container" id="detailContainer">
+        <!-- MOVIE DETAIL PAGE -->
+        <section class="section" id="detailSection" style="display: none;" aria-label="Movie or show details">
+            <div class="detail-container" id="detailContainer" role="region" aria-label="Content details">
                 <!-- Dynamic content from JavaScript -->
             </div>
         </section>
 
         <!-- POPULAR MOVIES SECTION -->
-        <section class="section" id="movieSection">
+        <section class="section" id="movieSection" aria-label="Popular movies">
             <div class="section-header">
                 <h2>🎬 Popular Movies</h2>
-                <a href="#" class="view-all" id="viewAllMovies">View All →</a>
+                <button type="button" class="view-all" id="viewAllMovies" aria-label="View all popular movies">View All →</button>
             </div>
-            <div class="movie-grid" id="movieGrid">
-                <div class="loading">Loading movies...</div>
+            <div class="movie-grid" id="movieGrid" role="region" aria-label="Movies grid" aria-live="polite">
+                <div class="loading" aria-busy="true" aria-label="Loading movies">Loading movies...</div>
             </div>
         </section>
 
         <!-- POPULAR TV SHOWS SECTION -->
-        <section class="section" id="tvSection">
+        <section class="section" id="tvSection" aria-label="Popular TV shows">
             <div class="section-header">
                 <h2>📺 Popular TV Shows</h2>
-                <a href="#" class="view-all" id="viewAllTv">View All →</a>
+                <button type="button" class="view-all" id="viewAllTv" aria-label="View all popular TV shows">View All →</button>
             </div>
-            <div class="movie-grid" id="tvGrid">
-                <div class="loading">Loading TV shows...</div>
+            <div class="movie-grid" id="tvGrid" role="region" aria-label="TV shows grid" aria-live="polite">
+                <div class="loading" aria-busy="true" aria-label="Loading TV shows">Loading TV shows...</div>
             </div>
         </section>
 
-<!-- WATCHLIST SECTION (awalnya hidden) -->
-<section class="section" id="watchlistSection" style="display: none;">
-    <div class="section-header">
-        <h2>⭐ My Watchlist</h2>
-        <div class="watchlist-actions">
-            <button id="scrapCodesBtn" class="scrap-btn">🔍 Scrap TMDB Codes</button>
-            <a href="#" class="view-all" id="closeWatchlist">✕ Close</a>
-        </div>
-    </div>
-    <div class="movie-grid" id="watchlistGrid">
-        <div class="loading">Loading watchlist...</div>
-    </div>
-    
-    <!-- TABEL SCRAP TMDB CODES -->
-    <div id="scrapTableContainer" class="scrap-table-container" style="display: none;">
-        <div class="scrap-table-header">
-            <h3>📊 TMDB Codes Analysis</h3>
-            <div class="scrap-table-actions">
-                <button id="exportCSVBtn" class="export-btn">📄 Export CSV</button>
-                <button id="exportJSONBtn" class="export-btn">📋 Export JSON</button>
-                <button id="closeScrapTable" class="close-scrap-btn">✕ Close Table</button>
+        <!-- WATCHLIST SECTION -->
+        <section class="section" id="watchlistSection" style="display: none;" aria-label="My watchlist">
+            <div class="section-header">
+                <h2>⭐ My Watchlist</h2>
+                <div class="watchlist-actions">
+                    <button type="button" id="scrapCodesBtn" class="scrap-btn" aria-label="Scrape TMDB codes from watchlist">🔍 Scrap TMDB Codes</button>
+                    <button type="button" class="view-all" id="closeWatchlist" aria-label="Close watchlist">✕ Close</button>
+                </div>
             </div>
-        </div>
-        <div class="table-wrapper">
-            <table id="scrapTable" class="scrap-table">
-                <thead>
-                    <tr>
-                        <th>NO</th>
-                        <th>Movie Title</th>
-                        <th>Codes (TMDB)</th>
-                        <th>Relay</th>
-                        <th>Valid ID</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-                <tbody id="scrapTableBody">
-                    <tr><td colspan="6" class="loading">Loading codes...</td></tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
-</section>
+            <div class="movie-grid" id="watchlistGrid" role="region" aria-label="Watchlist grid" aria-live="polite">
+                <div class="loading" aria-busy="true" aria-label="Loading watchlist">Loading watchlist...</div>
+            </div>
+            
+            <!-- TMDB CODES TABLE -->
+            <div id="scrapTableContainer" class="scrap-table-container" style="display: none;" role="region" aria-label="TMDB codes analysis table">
+                <div class="scrap-table-header">
+                    <h3>📊 TMDB Codes Analysis</h3>
+                    <div class="scrap-table-actions">
+                        <button type="button" id="exportCSVBtn" class="export-btn" aria-label="Export data as CSV">📄 Export CSV</button>
+                        <button type="button" id="exportJSONBtn" class="export-btn" aria-label="Export data as JSON">📋 Export JSON</button>
+                        <button type="button" id="closeScrapTable" class="close-scrap-btn" aria-label="Close TMDB codes table">✕ Close Table</button>
+                    </div>
+                </div>
+                <div class="table-wrapper">
+                    <table id="scrapTable" class="scrap-table" role="table" aria-label="TMDB codes data">
+                        <caption>Analysis of TMDB codes extracted from watchlist items</caption>
+                        <thead>
+                            <tr>
+                                <th scope="col">NO</th>
+                                <th scope="col">Movie Title</th>
+                                <th scope="col">Codes (TMDB)</th>
+                                <th scope="col">Relay</th>
+                                <th scope="col">Valid ID</th>
+                                <th scope="col">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="scrapTableBody">
+                            <tr><td colspan="6" class="loading" aria-busy="true">Loading codes...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
     </main>
 
     <!-- MODAL PLAYER -->
-    <div class="modal" id="playerModal">
+    <div class="modal" id="playerModal" role="dialog" aria-labelledby="modalTitle" aria-hidden="true">
         <div class="modal-content">
             <div class="modal-header">
                 <h3 id="modalTitle">Now Playing</h3>
                 <div class="modal-actions">
-                    <button class="modal-refresh" id="refreshPlayer" title="Refresh page (allow iframe content)">🔄</button>
-                    <span class="modal-close" id="closeModal">&times;</span>
+                    <button type="button" class="modal-refresh" id="refreshPlayer" title="Refresh player" aria-label="Refresh video player">🔄</button>
+                    <button type="button" class="modal-close" id="closeModal" aria-label="Close player" title="Close player">×</button>
                 </div>
             </div>
             <div class="modal-body">
-                <iframe id="videoFrame" width="100%" height="400" frameborder="0" allowfullscreen></iframe>
+                <iframe 
+                    id="videoFrame" 
+                    width="100%" 
+                    height="400" 
+                    frameborder="0" 
+                    allowfullscreen="allowfullscreen"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    title="Video player iframe"
+                    aria-label="Video player"></iframe>
             </div>
             <div class="modal-footer">
                 <p id="modalInfo"></p>
@@ -172,20 +222,49 @@
         </div>
     </div>
 
-    <footer class="footer">
+    <footer class="footer" role="contentinfo">
         <p>Grizzle — Your premium streaming destination</p>
         <p><small>Content aggregated from publicly available sources. For DMCA requests, contact original providers.</small></p>
     </footer>
 
-    <!-- Register Service Worker untuk PWA -->
+    <!-- Utility: Skip to main content link styles -->
+    <style>
+        .skip-to-main-link {
+            position: absolute;
+            top: -40px;
+            left: 0;
+            background: #000;
+            color: #fff;
+            padding: 8px;
+            z-index: 100;
+        }
+        .skip-to-main-link:focus {
+            top: 0;
+        }
+        .visually-hidden {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border-width: 0;
+        }
+    </style>
+
+    <!-- Register Service Worker for PWA -->
     <script>
         if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.register('sw.js')
-                .then(reg => console.log('Service Worker registered:', reg))
-                .catch(err => console.log('Service Worker failed:', err));
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('sw.js', { scope: '/' })
+                    .then(reg => console.log('Service Worker registered:', reg))
+                    .catch(err => console.error('Service Worker registration failed:', err));
+            });
         }
     </script>
     
-    <script src="js/app.js"></script>
+    <script defer src="js/app.js"></script>
 </body>
 </html>
